@@ -25,6 +25,7 @@ export default function Squares() {
   // of the currently active square (if any).
 
   const [activeSquare, setActiveSquare] = useState(null)
+  // const [squareIDs] = useState(listOfSquareIds)
 
   const isActive = id => {
     // This is not a click handler but a helper, used inside the JSX, (See below)
@@ -71,7 +72,6 @@ export default function Squares() {
               >
                 {/* this one is a proof on the reusability of isActive when it's only giving true/false. Reusability is key in react. get used to it. & playing with chained conditions. Note that the operators do have `order of operations` where && is like *'s, || is like +'s */}
                 {(isActive(id) && "x") || "y" || "z"}
-                2 * 3 + 4
               </div>
             )
           })
