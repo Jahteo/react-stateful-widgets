@@ -11,7 +11,7 @@ We can only feature one awesome programmer at a time.
 Find comments below to help you along.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 
 // Use this variable ONLY to initialize a slice of state!
 // There is something in the JSX right now breaking this rule.
@@ -27,12 +27,20 @@ const listOfAwesome = [
 export default function Programmers() {
   // We'll have to use the state hook twice, as we need two slices of state.
   // The programmers on the one hand, and the id of the featured programmer on the other.
+  //list of programmers would be in a state for when I'm manipulating it. NOt useful in this instance, but in general wil lbe useful.
+  //useState returns an array where the first item is the value & the second is the setter fn. This is destructured below to put brackets around people. We don't the return value of use state, we want the first item of the array that useState returns.
+  const [people] = useState(listOfAwesome)
+  const [featuredPerson, setFeaturedPerson] = useState(null)
 
   const getNameOfFeatured = () => {
     // This is not an event handler but a helper function. See its usage below.
     // It's going to need information from both slices of state!
     // Using the currently celebrated id, find inside the programmers slice of state
     // the _name_ of the currently celebrated programmer, and return it.
+    //  this will need to be adjusted
+    // let nameOfFeatured = people.filter(person => person.id = featuredPerson)//people with id of featuredPerson
+    // return nameOfFeatured.name
+    return featuredPerson.name
   };
 
   const style = {
@@ -48,10 +56,10 @@ export default function Programmers() {
         {
           /* Nasty bug! We should map over a slice of state, instead of 'listOfAwesome'.
           We might say: "it works, though!" But if the list of programmers is not state,
-          we could never add or edit programmers in the future. The list would be a static thing. ;)" */
-          listOfAwesome.map(dev =>
+          we could never add or edit programmers in the future. The list would be a static thing. ;)" <changed next line to people.map, not listOfAwesome.map>*/
+          people.map(dev =>
             <div key={dev.id}>
-              {dev.name} <button onClick={() => { /* set the featured id passing dev.id */ }}>Feature</button>
+              {dev.name} <button onClick={() => { /* set the featured id passing dev.id */ setFeaturedPerson(dev)}}>Feature</button>
             </div>
           )
         }
@@ -59,7 +67,7 @@ export default function Programmers() {
       {
         // Ternaries are fantastic to render "one thing or the other" depending on the "truthiness" of something.
         // Pseudo-code: if the currently featured id is truthy render div 1, otherwise render div 2. Fix!
-        false
+        featuredPerson
           ? <div style={style}>🎉 Let&apos;s celebrate {getNameOfFeatured()}! 🥳</div>
           : <div style={style}>Pick an awesome programmer</div>
       }
