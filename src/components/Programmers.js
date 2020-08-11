@@ -37,10 +37,13 @@ export default function Programmers() {
     // It's going to need information from both slices of state!
     // Using the currently celebrated id, find inside the programmers slice of state
     // the _name_ of the currently celebrated programmer, and return it.
-    //  this will need to be adjusted
-    // let nameOfFeatured = people.filter(person => person.id = featuredPerson)//people with id of featuredPerson
-    // return nameOfFeatured.name
-    return featuredPerson.name
+        // I couldn't figure out the syntax for getNameOfFeatured when setFeaturedPerson was passed only the id of that person. So I had it passed the whole object of that person which made life easier, but I still am not understanding how to solve it when confronted with that situation. finished MVP finally
+
+    // let nameOfFeatured = people.filter(person => person.id = featuredPerson)//people with id of featuredPerson //this doesn't work bc .filter will return an array, not the value of.
+    let nameOfFeatured = people.find(person => person.id === featuredPerson )?.name
+    //.find would let me grab everything, but return just what asking for.
+    return nameOfFeatured
+    // return featuredPerson.name
   };
 
   const style = {
@@ -59,7 +62,7 @@ export default function Programmers() {
           we could never add or edit programmers in the future. The list would be a static thing. ;)" <changed next line to people.map, not listOfAwesome.map>*/
           people.map(dev =>
             <div key={dev.id}>
-              {dev.name} <button onClick={() => { /* set the featured id passing dev.id */ setFeaturedPerson(dev)}}>Feature</button>
+              {dev.name} <button onClick={() => { /* set the featured id passing dev.id */ setFeaturedPerson(dev.id)}}>Feature</button>
             </div>
           )
         }
