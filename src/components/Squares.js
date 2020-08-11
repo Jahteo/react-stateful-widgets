@@ -34,8 +34,10 @@ export default function Squares() {
 
     //Problem: I can't wrap my head around how to reference the active square. I'm having a hard time wrapping my brain around what the square I'm id'ing even in.
 
-    return ''
-    // return id === activeSquare ? square${isActive(id)}className = "active" : div[id].className = ""
+    // return ''
+    // return id === activeSquare ? "active" : ""
+    //newly separated from previous:
+    return activeSquare === id
   };
 
   const markActive = id => {
@@ -43,8 +45,11 @@ export default function Squares() {
     // Set the id argument to be the active id in state
     // (unless it already is, in which case we should reset
     // the currently active square id back to initial state).
+    setActiveSquare(id)
   };
 
+
+  //avoid decision logic below, only display logic
   return (
     <div className='widget-squares container'>
       <h2>Squares</h2>
@@ -53,15 +58,23 @@ export default function Squares() {
           /* Nasty bug! We should map over a slice of state, instead of 'listOfSquareIds'.
           We might say: "it works, though!" But if the list of squares is not state,
           we could never add squares, change squares or remove squares in the future. Fix!" */
-          listOfSquareIds.map(id =>
-            <div
-              id={id}
-              key={id}
-              className={`square${isActive(id)}`}
-              onClick={() => markActive(id)}
-            >
-            </div>
-          )
+          listOfSquareIds.map(id => {
+            return (
+              <div
+                id={id}
+                key={id}
+                // className={`square ${isActive(id)}`}
+                //logic of what to display here. logic of how to decide up above in helper funciton.
+                className={isActive(id) ? "square active" : "square"}
+                //on____'s must have a function (commonly an arrow fn)
+                onClick={() => markActive(id)}
+              >
+                {/* this one is a proof on the reusability of isActive when it's only giving true/false. Reusability is key in react. get used to it. & playing with chained conditions. Note that the operators do have `order of operations` where && is like *'s, || is like +'s */}
+                {(isActive(id) && "x") || "y" || "z"}
+                2 * 3 + 4
+              </div>
+            )
+          })
         }
       </div>
     </div>
